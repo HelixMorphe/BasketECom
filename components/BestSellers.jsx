@@ -11,7 +11,7 @@ function BestSellers() {
       <div className="mt-2">
         <ProductCard
           url="/img/broc2.png"
-          color="green"
+          color="bg-green-50"
           title="Broccoli"
           desc="Broccoli is a vegetable source of fiber"
           rating="4.9"
@@ -20,7 +20,7 @@ function BestSellers() {
       <div className="mt-2">
         <ProductCard
           url="/img/bb.png"
-          color="blue"
+          color="bg-blue-50"
           title="Blueberries"
           desc="Blueberries a good source of vitamin K1, vitamin C."
           rating="4.7"
