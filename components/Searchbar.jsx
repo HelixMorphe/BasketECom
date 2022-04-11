@@ -5,7 +5,7 @@ function Searchbar() {
     <div className="flex w-full rounded-xl bg-gray-100 px-4 py-4">
       <SearchIcon />
       <input
-        className="w-full rounded-xl bg-gray-100 px-2 outline-0"
+        className="w-full rounded-xl bg-gray-100 px-2 text-[14px] outline-0"
         type="text"
         placeholder="Search for anything"
       />
