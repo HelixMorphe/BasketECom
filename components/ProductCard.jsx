@@ -5,7 +5,7 @@ function ProductCard({ url, color, title, desc, rating }) {
   return (
     <div>
       <div className="flex rounded-2xl bg-white p-5 shadow-sm ">
-        <div className={`rounded-2xl bg-${color}-50 p-5`}>
+        <div className={`rounded-2xl bg-green-50 p-5`}>
           <div className="relative h-[60px] w-[60px]">
             <Image src={url} alt="brocolli" layout="fill" />
           </div>
