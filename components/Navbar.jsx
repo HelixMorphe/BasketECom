@@ -8,16 +8,7 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded'
 import SearchIcon from '@mui/icons-material/Search'
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: '#fff',
-    },
-    secondary: {
-      main: '#edf2ff',
-    },
-  },
-})
+
 function Navbar() {
   const [active, setActive] = useState(0)
   return (
