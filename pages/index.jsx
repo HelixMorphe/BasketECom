@@ -1,5 +1,6 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Searchbar from '../components/Searchbar'
 import Banner from '../components/Banner'
@@ -11,7 +12,13 @@ import Login from '../components/Login'
 const Home = () => {
   const { data: session } = useSession()
   const router = useRouter()
-  if (!session) {
+  const [login, setLogin] = useState(false)
+  useEffect(() => {
+    if (session) {
+      setLogin(true)
+    }
+  }, [session])
+  if (login === false) {
     return (
       <div>
         <Login />

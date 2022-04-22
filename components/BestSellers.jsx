@@ -10,6 +10,7 @@ function BestSellers() {
       </div>
       <div className="mt-2">
         <ProductCard
+          id="1"
           url="/img/broc2.png"
           color="bg-green-50"
           title="Broccoli"
@@ -19,6 +20,7 @@ function BestSellers() {
       </div>
       <div className="mt-2">
         <ProductCard
+          id="2"
           url="/img/bb.png"
           color="bg-blue-50"
           title="Blueberries"
