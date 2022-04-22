@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import NavBar from '../components/Navbar'
 import { ArrowBack } from '@mui/icons-material'
+import Link from 'next/link'
 function Product() {
   const router = useRouter()
 
@@ -10,8 +11,10 @@ function Product() {
     <div className="">
       <div className="">
         <div className=" flex min-h-[40vh] flex-col rounded-b-2xl bg-red-500/70 p-4 shadow-2xl shadow-red-200">
-          <div>
-            <ArrowBack className="text-black" />
+          <div className="">
+            <Link href="/" passHref>
+              <ArrowBack className="text-black" />
+            </Link>
           </div>
           <div className="flex flex-grow items-center justify-center">
             <div className="w-full">

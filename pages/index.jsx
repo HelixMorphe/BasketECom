@@ -10,15 +10,11 @@ import Navbar from '../components/Navbar'
 import Login from '../components/Login'
 
 const Home = () => {
-  const { data: session } = useSession()
-  const router = useRouter()
-  const [login, setLogin] = useState(false)
-  useEffect(() => {
-    if (session) {
-      setLogin(true)
-    }
-  }, [session])
-  if (login === false) {
+  const { data: session, status } = useSession()
+  if (status === 'loading') {
+    return <div>loading</div>
+  }
+  if (status === 'unauthenticated') {
     return (
       <div>
         <Login />
