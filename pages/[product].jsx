@@ -71,7 +71,14 @@ function Product() {
           <div className="flex flex-grow items-center justify-center">
             <div className="w-full">
               <div className="relative mx-auto flex h-[300px] w-5/6 items-center justify-center">
-                <div className="relative mx-auto h-[200px] w-5/6">
+                <motion.div
+                  whileTap={{ scale: 0.9 }}
+                  animate={{
+                    scale: [0.9, 1],
+                  }}
+                  // transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="relative z-30 mx-auto h-[200px] w-5/6"
+                >
                   <Image
                     className="absolute top-0 left-0 z-30"
                     src="/img/apple.png"
@@ -79,7 +86,7 @@ function Product() {
                     layout="fill"
                     objectFit="contain"
                   />
-                </div>
+                </motion.div>
                 <motion.div
                   animate={{
                     scale: [0, 1.1, 0.7, 0.8],
@@ -203,9 +210,12 @@ function Product() {
                         ? { x: constraintsRef.current.offsetWidth - 65 }
                         : {}
                     }
+                    transition={{
+                      duration: 0.3,
+                    }}
                     whileTap={{
                       scale: 0.9,
-                      rotate: -190,
+                      rotate: 190,
                       borderRadius: '100%',
                     }}
                     onAnimationComplete={handleAnimationComplete}
