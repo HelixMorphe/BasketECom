@@ -151,7 +151,7 @@ function Product() {
                 <h2 className="text-base font-bold text-gray-800">Price</h2>
                 <div className="flex w-full items-center justify-between">
                   <p className="mt-1 flex-[2] text-2xl font-bold text-orange-500">
-                    Rs {count === 0 ? 25 : 25 * count}
+                    ₹ {count === 0 ? 25 : 25 * count}
                   </p>
                   <div className="flex flex-1 items-center justify-between">
                     <motion.div
