@@ -77,7 +77,7 @@ function Product() {
                     scale: [0.9, 1],
                   }}
                   // transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  className="relative z-30 mx-auto h-[200px] w-5/6"
+                  className=" relative z-30 mx-auto h-[200px] w-5/6 overflow-hidden"
                 >
                   <Image
                     className="absolute top-0 left-0 z-30"
@@ -93,7 +93,7 @@ function Product() {
                     rotate: [0, 90, -270, 70],
                   }}
                   transition={{ duration: 1.5 }}
-                  className="absolute h-[400px] w-[400px]"
+                  className=" absolute h-[400px] w-[400px] overflow-hidden"
                 >
                   <svg
                     id="10015.io"
