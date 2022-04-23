@@ -82,7 +82,7 @@ function Product() {
                 </div>
                 <motion.div
                   animate={{
-                    scale: [0, 1.1, 0.7, 1],
+                    scale: [0, 1.1, 0.7, 0.8],
                     rotate: [0, 90, -270, 70],
                   }}
                   transition={{ duration: 1.5 }}
