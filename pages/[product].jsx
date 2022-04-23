@@ -81,7 +81,7 @@ function Product() {
                 >
                   <Image
                     className="absolute top-0 left-0 z-30 "
-                    src="/img/orange.png"
+                    src="/img/apple.png"
                     alt="apple"
                     layout="fill"
                     objectFit="contain"
@@ -89,11 +89,11 @@ function Product() {
                 </motion.div>
                 <motion.div
                   animate={{
-                    scale: [0, 0.9, 0.5, 0.8],
+                    scale: [0, 0.8, 0.5, 0.8],
                     rotate: [0, 90, -270, 0],
                   }}
                   transition={{ duration: 1.5 }}
-                  className=" absolute h-[400px] w-[400px] overflow-hidden"
+                  className=" absolute h-[350px] w-[350px] overflow-hidden"
                 >
                   <svg
                     id="10015.io"
