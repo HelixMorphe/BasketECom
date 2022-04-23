@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 import Image from 'next/image'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useState, useRef } from 'react'
 import { LocationOnOutlined } from '@mui/icons-material'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
@@ -10,8 +10,15 @@ import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded'
 import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
 function Product() {
-  const router = useRouter()
+  const constraintsRef = useRef(null)
   const [count, setCount] = useState(0)
+  const x = useMotionValue(0)
+  const background = useTransform(
+    x,
+    [0, 100, 200],
+    ['#f3f4f6', '#fbbf24', '#f97316']
+  )
+
   return (
     <div className=" min-h-[100vh] bg-gray-50">
       <div className="min-h-[40vh] bg-red-500/80">
@@ -69,7 +76,7 @@ function Product() {
             </div>
             <p className="mt-1 text-base text-gray-400">Organic</p>
           </div>
-          <div className="mt-5 flex flex-grow flex-col justify-between ">
+          <div className="mt-5 flex flex-col justify-between  ">
             <div className="flex flex-col justify-between">
               <h2 className="text-base font-bold text-gray-800">Description</h2>
               <p className="mt-2 text-gray-500 ">
@@ -88,29 +95,48 @@ function Product() {
                     Rs {count === 0 ? 25 : 25 * count}
                   </p>
                   <div className="flex flex-1 items-center justify-between">
-                    <div
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}
                       onClick={() => {
                         if (count != 0) setCount(count - 1)
                       }}
                       className="rounded-md bg-gray-300 p-2"
                     >
                       <RemoveIcon />
-                    </div>
+                    </motion.div>
                     <div className="font-semibold text-gray-700 ">
                       <p>{count} Kg</p>
                     </div>
-                    <div
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}
                       onClick={() => {
                         setCount(count + 1)
                       }}
                       className="rounded-md bg-orange-500 p-2"
                     >
                       <AddIcon className="text-gray-100" />
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mt-5 flex flex-grow items-center justify-center">
+            <motion.div
+              style={{ background }}
+              ref={constraintsRef}
+              className="slider relative flex h-[65px] w-full items-center justify-center rounded-lg bg-gray-100"
+            >
+              <p className="">Add to Cart</p>
+              <motion.div
+                style={{ x }}
+                whileTap={{ scale: 0.9 }}
+                drag="x"
+                className="absolute top-0 left-0 h-full w-[70px] rounded-md bg-white"
+                dragConstraints={constraintsRef}
+                dragElastic={2}
+              ></motion.div>
+            </motion.div>
           </div>
         </div>
       </div>
