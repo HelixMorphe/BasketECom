@@ -80,14 +80,26 @@ function Product() {
                     objectFit="contain"
                   />
                 </div>
-
-                <Image
-                  className="absolute top-0 left-0 "
-                  src="/img/bg.svg"
-                  alt="apple"
-                  layout="fill"
-                  objectFit="contain"
-                />
+                <motion.div
+                  animate={{
+                    scale: [0, 1.1, 0.7, 1],
+                    rotate: [0, 90, -270, 70],
+                  }}
+                  transition={{ duration: 1.5 }}
+                  className="absolute h-[400px] w-[400px]"
+                >
+                  <svg
+                    id="10015.io"
+                    viewBox="0 0 480 480"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                  >
+                    <path
+                      fill="#f4f4ff"
+                      d="M426,293Q405,346,363.5,383Q322,420,268.5,416.5Q215,413,161,403.5Q107,394,62.5,349.5Q18,305,36.5,245.5Q55,186,96,153.5Q137,121,176,93.5Q215,66,264.5,72Q314,78,354,109.5Q394,141,420.5,190.5Q447,240,426,293Z"
+                    />
+                  </svg>
+                </motion.div>
               </div>
             </div>
           </div>
