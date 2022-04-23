@@ -1,28 +1,52 @@
 import React, { useEffect } from 'react'
-import { motion, useMotionValue, useTransform } from 'framer-motion'
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  AnimatePresence,
+} from 'framer-motion'
 import Image from 'next/image'
 import { useState, useRef } from 'react'
 import { LocationOnOutlined } from '@mui/icons-material'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import WatchLaterIcon from '@mui/icons-material/WatchLater'
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded'
 import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
+import { duration } from '@mui/material'
 function Product() {
   const constraintsRef = useRef(null)
+
+  const [trigger, setTrigger] = useState(0)
+  const [sliderFinish, setSliderFinish] = useState(0)
   const [count, setCount] = useState(0)
   const x = useMotionValue(0)
+
   const background = useTransform(
     x,
     [0, 100, 200],
     ['#f3f4f6', '#fbbf24', '#f97316']
   )
-
+  const output =
+    count === 0
+      ? ['#64748b', '#1f2937', '#f9fafb']
+      : ['#1f2937', '#1f2937', '#f9fafb']
+  const color = useTransform(x, [0, 100, 200], output)
+  const handleDragEnd = () => {
+    setTrigger(0)
+    if (x.get() > constraintsRef.current.offsetWidth / 3) setTrigger(1)
+  }
+  const handleAnimationComplete = () => {
+    if (x.get() > constraintsRef.current.offsetWidth / 2) {
+      setSliderFinish(1)
+    }
+  }
   return (
-    <div className=" min-h-[100vh] bg-gray-50">
-      <div className="min-h-[40vh] bg-red-500/80">
-        <div className=" flex min-h-[40vh] flex-col p-4 ">
+    <div className=" bg-gray-50">
+      <div className=" bg-red-500/80">
+        <div className=" flex flex-col p-4 ">
           <div className="">
             <Link href="/" passHref>
               <ArrowBack className="text-black" />
@@ -52,7 +76,7 @@ function Product() {
             </div>
           </div>
         </div>
-        <div className=" flex min-h-[60vh] flex-col rounded-t-2xl  bg-gray-50 p-4">
+        <div className=" flex flex-col rounded-t-2xl  bg-gray-50 p-4">
           <div className="m-auto mb-4 h-[4px] w-[10vh] rounded-md bg-gray-500"></div>
           <div>
             <div className="flex w-full items-center justify-between">
@@ -98,21 +122,29 @@ function Product() {
                     <motion.div
                       whileTap={{ scale: 0.9 }}
                       onClick={() => {
-                        if (count != 0) setCount(count - 1)
+                        {
+                          !sliderFinish && count != 0 && count - 1
+                        }
                       }}
                       className="rounded-md bg-gray-300 p-2"
                     >
-                      <RemoveIcon />
+                      <RemoveIcon
+                        className={`${sliderFinish ? 'text-gray-100' : ''}`}
+                      />
                     </motion.div>
-                    <div className="font-semibold text-gray-700 ">
+                    <div className={`font-semibold text-gray-700 `}>
                       <p>{count} Kg</p>
                     </div>
                     <motion.div
                       whileTap={{ scale: 0.9 }}
                       onClick={() => {
-                        setCount(count + 1)
+                        {
+                          !sliderFinish && setCount(count + 1)
+                        }
                       }}
-                      className="rounded-md bg-orange-500 p-2"
+                      className={`${
+                        sliderFinish ? 'bg-gray-300' : 'bg-orange-500'
+                      } rounded-md p-2`}
                     >
                       <AddIcon className="text-gray-100" />
                     </motion.div>
@@ -125,17 +157,43 @@ function Product() {
             <motion.div
               style={{ background }}
               ref={constraintsRef}
-              className="slider relative flex h-[65px] w-full items-center justify-center rounded-lg bg-gray-100"
+              className="slider relative mt-2 flex h-[65px] w-full items-center justify-center rounded-lg bg-orange-500 "
             >
-              <p className="">Add to Cart</p>
-              <motion.div
-                style={{ x }}
-                whileTap={{ scale: 0.9 }}
-                drag="x"
-                className="absolute top-0 left-0 h-full w-[70px] rounded-md bg-white"
-                dragConstraints={constraintsRef}
-                dragElastic={2}
-              ></motion.div>
+              <motion.p
+                style={{ color }}
+                className={`${
+                  count === 0 ? 'text-gray-500' : ''
+                } font-semibold`}
+              >
+                {sliderFinish ? 'Added to Cart' : 'Add to Cart'}
+              </motion.p>
+              <AnimatePresence>
+                {!sliderFinish && (
+                  <motion.div
+                    style={{ x }}
+                    animate={
+                      trigger
+                        ? { x: constraintsRef.current.offsetWidth - 65 }
+                        : {}
+                    }
+                    whileDrag={{ scale: 0.9 }}
+                    onAnimationComplete={handleAnimationComplete}
+                    drag={count === 0 ? false : 'x'}
+                    className="absolute top-0 left-0 flex h-full w-[70px] items-center justify-center rounded-md bg-white"
+                    dragConstraints={constraintsRef}
+                    dragElastic={2}
+                    onDragEnd={handleDragEnd}
+                    dragSnapToOrigin={!trigger ? true : false}
+                    exit={{ opacity: 0 }}
+                  >
+                    <CircleOutlinedIcon
+                      className={`${
+                        count === 0 ? 'text-gray-500' : 'text-orange-500'
+                      } text-center text-2xl`}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           </div>
         </div>
