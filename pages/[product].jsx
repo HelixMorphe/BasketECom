@@ -7,7 +7,9 @@ import {
 } from 'framer-motion'
 import Image from 'next/image'
 import { useState, useRef } from 'react'
+import { Badge } from '@mui/material'
 import { LocationOnOutlined } from '@mui/icons-material'
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
@@ -15,10 +17,10 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater'
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded'
 import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
-import { duration } from '@mui/material'
+
 function Product() {
   const constraintsRef = useRef(null)
-
+  const [cartCount, setCartCount] = useState(1)
   const [trigger, setTrigger] = useState(0)
   const [sliderFinish, setSliderFinish] = useState(0)
   const [count, setCount] = useState(0)
@@ -41,16 +43,30 @@ function Product() {
   const handleAnimationComplete = () => {
     if (x.get() > constraintsRef.current.offsetWidth / 2) {
       setSliderFinish(1)
+      setCartCount(cartCount + 1)
     }
   }
   return (
     <div className=" bg-gray-50">
       <div className=" bg-red-500/80">
-        <div className=" flex flex-col p-4 ">
-          <div className="">
-            <Link href="/" passHref>
-              <ArrowBack className="text-black" />
-            </Link>
+        <div className=" flex flex-col  p-4 ">
+          <div className=" flex items-center justify-between">
+            <motion.div whileTap={{ scale: 0.9 }}>
+              <Link href="/" passHref>
+                <ArrowBack className="text-gray-800" />
+              </Link>
+            </motion.div>
+
+            <motion.div whileTap={{ scale: 0.9 }} className="">
+              <Link href="/" passHref>
+                <Badge
+                  badgeContent={cartCount}
+                  className="rounded-full bg-white p-2 shadow-sm"
+                >
+                  <ShoppingCartRoundedIcon className=" text-gray-800" />
+                </Badge>
+              </Link>
+            </motion.div>
           </div>
           <div className="flex flex-grow items-center justify-center">
             <div className="w-full">
@@ -122,9 +138,7 @@ function Product() {
                     <motion.div
                       whileTap={{ scale: 0.9 }}
                       onClick={() => {
-                        {
-                          !sliderFinish && count != 0 && count - 1
-                        }
+                        !sliderFinish && count && setCount(count - 1)
                       }}
                       className="rounded-md bg-gray-300 p-2"
                     >
@@ -155,6 +169,7 @@ function Product() {
           </div>
           <div className="mt-5 flex flex-grow items-center justify-center">
             <motion.div
+              whileTap={sliderFinish && { scale: 0.9 }}
               style={{ background }}
               ref={constraintsRef}
               className="slider relative mt-2 flex h-[65px] w-full items-center justify-center rounded-lg bg-orange-500 "
@@ -176,7 +191,11 @@ function Product() {
                         ? { x: constraintsRef.current.offsetWidth - 65 }
                         : {}
                     }
-                    whileDrag={{ scale: 0.9 }}
+                    whileTap={{
+                      scale: 0.9,
+                      rotate: -190,
+                      borderRadius: '100%',
+                    }}
                     onAnimationComplete={handleAnimationComplete}
                     drag={count === 0 ? false : 'x'}
                     className="absolute top-0 left-0 flex h-full w-[70px] items-center justify-center rounded-md bg-white"
