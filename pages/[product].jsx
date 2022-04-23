@@ -89,8 +89,8 @@ function Product() {
                 </motion.div>
                 <motion.div
                   animate={{
-                    scale: [0, 1.1, 0.7, 0.8],
-                    rotate: [0, 90, -270, 70],
+                    scale: [0, 1, 0.7, 0.8],
+                    rotate: [0, 90, -270, 0],
                   }}
                   transition={{ duration: 1.5 }}
                   className=" absolute h-[400px] w-[400px] overflow-hidden"
