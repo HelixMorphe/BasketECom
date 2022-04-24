@@ -20,7 +20,7 @@ import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
 import axios from 'axios'
 
-function Product() {
+function Product({ data }) {
   const router = useRouter()
   const constraintsRef = useRef(null)
   const [cartCount, setCartCount] = useState(1)
@@ -122,7 +122,7 @@ function Product() {
           <div>
             <div className="flex w-full items-center justify-between">
               <h2 className="w-full flex-1 text-[24px] font-bold text-gray-900">
-                Apples
+                {data.title}
               </h2>
               <div className="flex w-full flex-[2] items-center justify-around text-sm">
                 <div className="flex items-center">
@@ -131,25 +131,20 @@ function Product() {
                 </div>
                 <div className="flex items-center">
                   <StarRateRoundedIcon className="text-orange-600" />
-                  <p className="ml-1 text-gray-400">4.9</p>
+                  <p className="ml-1 text-gray-400">{data.rating}</p>
                 </div>
                 <div className="flex items-center">
                   <WatchLaterIcon className="text-base text-orange-600" />
-                  <p className="ml-1 text-gray-400">10-20 Min</p>
+                  <p className="ml-1 text-gray-400">{data.timeTaken} Min</p>
                 </div>
               </div>
             </div>
-            <p className="mt-1 text-base text-gray-400">Organic</p>
+            <p className="mt-1 text-base text-gray-400">{data.subTitle}</p>
           </div>
           <div className="mt-5 flex flex-col justify-between  ">
             <div className="flex flex-col justify-between">
               <h2 className="text-base font-bold text-gray-800">Description</h2>
-              <p className="mt-2 text-gray-500 ">
-                An apple is an edible fruit produced by an apple tree. Apple
-                trees are cultivated worldwide and are the most widely grown
-                species in the genus Malus. The tree originated in Central Asia,
-                where its wild ancestor, Malus sieversii, is still found today
-              </p>
+              <p className="mt-2 text-gray-500 ">{data.description}</p>
             </div>
 
             <div className="mt-5 flex w-full flex-grow">
@@ -157,7 +152,7 @@ function Product() {
                 <h2 className="text-base font-bold text-gray-800">Price</h2>
                 <div className="flex w-full items-center justify-between">
                   <p className="mt-1 flex-[2] text-2xl font-bold text-orange-500">
-                    ₹ {count === 0 ? 25 : 25 * count}
+                    ₹ {count === 0 ? data.price : data.price * count}
                   </p>
                   <div className="flex flex-1 items-center justify-between">
                     <motion.div
