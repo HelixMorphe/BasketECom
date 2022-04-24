@@ -12,7 +12,7 @@ import axios from 'axios'
 
 const Home = ({ data }) => {
   const { data: session, status } = useSession()
-  console.log(data)
+  console.log(session, 'Session index')
   if (status === 'loading') {
     return <div>loading</div>
   }
@@ -50,12 +50,9 @@ const Home = ({ data }) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(
-    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
-  )
+  const res = await fetch(`${process.env.BASE_URI}/api/products`)
 
   const data = await res.json()
-  console.log(data)
 
   // Pass data to the page via props
   return { props: { data } }

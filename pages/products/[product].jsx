@@ -1,5 +1,6 @@
+// 6264e7dc9de6bac9f630edc4
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 import {
   motion,
   useMotionValue,
@@ -18,17 +19,29 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater'
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded'
 import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
-import axios from 'axios'
 
 function Product({ data }) {
-  const router = useRouter()
+  const { data: session, status } = useSession()
+  const [userData, setUserData] = useState({})
+
   const constraintsRef = useRef(null)
-  const [cartCount, setCartCount] = useState(1)
+  const [cartCount, setCartCount] = useState(0)
   const [trigger, setTrigger] = useState(0)
   const [sliderFinish, setSliderFinish] = useState(0)
   const [count, setCount] = useState(1)
   const x = useMotionValue(0)
-
+  useEffect(() => {
+    if (status === 'authenticated') {
+      console.log('started')
+      fetch(`${process.env.BASE_URI}/api/user/${session.user.name}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data, 'data')
+          setUserData(data)
+          setCartCount(data.cart.length)
+        })
+    }
+  }, [status])
   const background = useTransform(
     x,
     [0, 100, 200],
@@ -49,9 +62,7 @@ function Product({ data }) {
       setCartCount(cartCount + 1)
     }
   }
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
+
   return (
     <div className=" bg-gray-50">
       <div className=" bg-red-500/80">
@@ -248,7 +259,7 @@ export default Product
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `https://basket-git-dev-santhosh-cloud.vercel.app/api/product/${params.product}`
+    `${process.env.BASE_URI}/api/product/${params.product}`
   )
   const data = await res.json()
   return {
@@ -256,9 +267,7 @@ export async function getStaticProps({ params }) {
   }
 }
 export async function getStaticPaths({}) {
-  const res = await fetch(
-    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
-  )
+  const res = await fetch(`${process.env.BASE_URI}/api/products`)
   const data = await res.json()
 
   const paths = data.map((item) => ({

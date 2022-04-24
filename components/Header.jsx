@@ -3,7 +3,7 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 // import Login from '../../pages/login'
 function Header() {
   const { data: session } = useSession()
-
+  console.log(session)
   return (
     <div className="flex flex-row justify-between text-2xl font-normal text-gray-900">
       <div className="text-lg text-gray-900">

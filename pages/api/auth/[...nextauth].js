@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-
+import dbConnect from '../../../util/dbConnect'
+import User from '../../../models/User'
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -13,19 +14,32 @@ export default NextAuth({
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
-        password: { label: 'Password', type: 'password' },
+        username: { label: 'Username', type: 'text', placeholder: 'Username' },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: 'Password',
+        },
       },
       async authorize(credentials, req) {
-        console.log(req.body.username)
-        // Add logic here to look up the user from the credentials supplied
-        const user = {
-          id: 1,
-          name: req.body.username,
-          password: req.body.password,
-        }
-        //   const user = null
+        // Add logic here to look upname the user from the credentials supplied
+        await dbConnect()
 
+        const userSearch = await User.findOne({
+          username: req.body.username,
+          password: req.body.password,
+        })
+
+        //   const user = null
+        const user = {
+          id: userSearch._id,
+          name: userSearch.username,
+          password: userSearch.password,
+          cart: userSearch.cart,
+          orders: userSearch.orders,
+          admin: userSearch.admin,
+        }
+        console.log(user, 'User')
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return user
