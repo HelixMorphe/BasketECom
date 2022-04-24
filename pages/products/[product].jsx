@@ -245,15 +245,29 @@ function Product() {
 
 export default Product
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
   // Fetch data from external API
 
   const res = await fetch(
-    `https://basket-git-dev-santhosh-cloud.vercel.app/api/product/${params.product}`
+    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
   )
 
   const data = await res.json()
 
+  const paths = data.map((item) => ({
+    params: { id: item._id },
+  }))
+
   // Pass data to the page via props
-  return { props: { data } }
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(
+    `https://basket-git-dev-santhosh-cloud.vercel.app/api/product/${params.product}`
+  )
+  const data = await res.json()
+  return {
+    props: data,
+  }
 }
