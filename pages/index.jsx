@@ -48,7 +48,7 @@ const Home = ({ apiData }) => {
 export async function getServerSideProps() {
   // Fetch data from external API
   const res = await fetch(
-    `https://basket-aawhoflwu-santhosh-cloud.vercel.app/api/products`
+    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
   )
   const apiData = await res.json()
 
