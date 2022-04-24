@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import {
   motion,
   useMotionValue,
@@ -17,8 +18,10 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater'
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded'
 import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
+import axios from 'axios'
 
 function Product() {
+  const router = useRouter()
   const constraintsRef = useRef(null)
   const [cartCount, setCartCount] = useState(1)
   const [trigger, setTrigger] = useState(0)
@@ -45,6 +48,9 @@ function Product() {
       setSliderFinish(1)
       setCartCount(cartCount + 1)
     }
+  }
+  if (router.isFallback) {
+    return <div>Loading...</div>
   }
   return (
     <div className=" bg-gray-50">
@@ -245,29 +251,26 @@ function Product() {
 
 export default Product
 
-export async function getStaticPaths() {
-  // Fetch data from external API
-
-  const res = await fetch(
-    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
-  )
-
-  const data = await res.json()
-
-  const paths = data.map((item) => ({
-    params: { id: item._id },
-  }))
-
-  // Pass data to the page via props
-  return { paths, fallback: false }
-}
-
 export async function getStaticProps({ params }) {
   const res = await fetch(
     `https://basket-git-dev-santhosh-cloud.vercel.app/api/product/${params.product}`
   )
   const data = await res.json()
   return {
-    props: data,
+    props: { data }, // will be passed to the page component as props
+  }
+}
+export async function getStaticPaths({}) {
+  const res = await fetch(
+    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
+  )
+  const data = await res.json()
+
+  const paths = data.map((item) => ({
+    params: { product: item._id.toString() },
+  }))
+  return {
+    paths,
+    fallback: true, // false or 'blocking'
   }
 }
