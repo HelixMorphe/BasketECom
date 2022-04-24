@@ -5,7 +5,7 @@ import Link from 'next/link'
 function ProductCard({ url, color, title, desc, rating, id }) {
   return (
     <div>
-      <Link href={`/${id}`} passHref>
+      <Link href={`/products/${id}`} passHref>
         <div className="flex rounded-2xl bg-white p-5 shadow-sm ">
           <div className={`${color} rounded-2xl p-5`}>
             <div className="relative h-[60px] w-[60px]">
