@@ -40,9 +40,9 @@ const Home = ({ data }) => {
             <BestSellers data={data} />
           </div>
         </div>
-        <div className="sticky bottom-0 bg-gray-50">
+        {/* <div className="sticky bottom-0 bg-gray-50">
           <Navbar />
-        </div>
+        </div> */}
       </div>
     )
   }

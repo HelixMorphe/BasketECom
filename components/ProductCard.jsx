@@ -6,7 +6,7 @@ function ProductCard({ url, color, title, subTitle, desc, rating, id }) {
   return (
     <div>
       <Link href={`/products/${id}`} passHref>
-        <div className="flex rounded-2xl bg-white p-5 shadow-sm ">
+        <div className="flex rounded-2xl bg-white p-3 shadow-sm ">
           <div className={`${color} rounded-2xl p-5`}>
             <div className="relative h-[60px] w-[60px]">
               <Image src={url} alt="brocolli" layout="fill" />
