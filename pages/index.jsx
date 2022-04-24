@@ -1,7 +1,5 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import Product from '../models/Product'
-import dbConnect from '../util/dbConnect'
 import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Searchbar from '../components/Searchbar'
@@ -11,7 +9,6 @@ import BestSellers from '../components/BestSellers'
 import Navbar from '../components/Navbar'
 import Login from '../components/Login'
 import axios from 'axios'
-import ProductCard from '../components/ProductCard'
 
 const Home = ({ data }) => {
   const { data: session, status } = useSession()
@@ -52,20 +49,16 @@ const Home = ({ data }) => {
 }
 
 export async function getServerSideProps() {
-  // Call an external API endpoint to get data.
-  // You can use any data fetching library
+  // Fetch data from external API
+  const res = await axios.get(
+    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
+  )
 
-  await dbConnect()
-  const result = await Product.find().lean()
+  const data = await res.json()
+  console.log(data)
 
-  const data = result
-  console.log(data, 'data')
-
-  return {
-    props: {
-      data: JSON.parse(JSON.stringify(result)),
-    },
-  }
+  // Pass data to the page via props
+  return { props: { data } }
 }
 
 export default Home
