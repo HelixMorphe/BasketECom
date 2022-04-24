@@ -45,11 +45,10 @@ const Home = ({ apiData }) => {
     )
   }
 }
+
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(
-    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`
-  )
+  const res = await fetch(`http://localhost:3000/api/products`)
   const apiData = await res.json()
 
   // Pass data to the page via props
