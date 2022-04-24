@@ -9,8 +9,9 @@ import BestSellers from '../components/BestSellers'
 import Navbar from '../components/Navbar'
 import Login from '../components/Login'
 
-const Home = ({ apiData }) => {
+const Home = ({ data }) => {
   const { data: session, status } = useSession()
+  console.log(data)
   if (status === 'loading') {
     return <div>loading</div>
   }
@@ -35,7 +36,7 @@ const Home = ({ apiData }) => {
             <Categories />
           </div>
           <div className="mt-4">
-            <BestSellers data={apiData} />
+            <BestSellers data={data} />
           </div>
         </div>
         <div className="sticky bottom-0 bg-gray-50">
@@ -48,11 +49,22 @@ const Home = ({ apiData }) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`http://localhost:3000/api/products`)
-  const apiData = await res.json()
+  const res = await fetch(
+    `https://basket-git-dev-santhosh-cloud.vercel.app/api/products`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'User-Agent': '*',
+      },
+    }
+  )
+
+  const data = await res.json()
+  console.log(data)
 
   // Pass data to the page via props
-  return { props: { apiData } }
+  return { props: { data } }
 }
 
 export default Home
