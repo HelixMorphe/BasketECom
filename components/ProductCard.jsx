@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import StarIcon from '@mui/icons-material/Star'
 import Link from 'next/link'
-function ProductCard({ url, color, title, desc, rating, id }) {
+function ProductCard({ url, color, title, subTitle, desc, rating, id }) {
   return (
     <div>
       <Link href={`/products/${id}`} passHref>
@@ -16,7 +16,7 @@ function ProductCard({ url, color, title, desc, rating, id }) {
             <div className="flex w-[80%] flex-col">
               <h2 className="text-base font-bold">{title}</h2>
               <p className="pt-1 text-[14px] leading-4 text-gray-400">
-                Organic
+                {subTitle}
               </p>
               <p className="mt-2 flex items-center">
                 <StarIcon className="text-orange-400" />

@@ -1,34 +1,32 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import ProductCard from '../components/ProductCard'
-function BestSellers() {
+function BestSellers({ data }) {
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+    const temp = data.filter((item) => item.bestSeller === 1)
+    setProducts(temp)
+  }, [])
+
   return (
     <div>
       {/* Heading */}
       <div className="flex w-full items-center justify-between">
         <h2 className="text-2xl font-bold">Best Sellers</h2>
-        <p className="text-sm font-semibold text-gray-400">See All</p>
       </div>
-      <div className="mt-2">
-        <ProductCard
-          id="1"
-          url="/img/broc2.png"
-          color="bg-green-50"
-          title="Broccoli"
-          desc="Broccoli is a vegetable source of fiber"
-          rating="4.9"
-        />
-      </div>
-      <div className="mt-2">
-        <ProductCard
-          id="2"
-          url="/img/bb.png"
-          color="bg-blue-50"
-          title="Blueberries"
-          desc="Blueberries a good source of vitamin K1, vitamin C."
-          rating="4.7"
-        />
-      </div>
-      <div className="mt-2">{/* <ProductCard  /> */}</div>
+      {products.map((item) => (
+        <div className="mt-2">
+          <ProductCard
+            id={item._id}
+            url="/img/apple.png"
+            color="bg-red-50"
+            title={item.title}
+            subTitle={item.subTitle}
+            desc={item.description}
+            rating={item.rating}
+          />
+        </div>
+      ))}
     </div>
   )
 }

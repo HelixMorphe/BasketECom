@@ -23,7 +23,7 @@ function Product() {
   const [cartCount, setCartCount] = useState(1)
   const [trigger, setTrigger] = useState(0)
   const [sliderFinish, setSliderFinish] = useState(0)
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(1)
   const x = useMotionValue(0)
 
   const background = useTransform(

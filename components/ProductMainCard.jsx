@@ -6,9 +6,9 @@ function ProductMainCard() {
   return (
     <motion.div
       whileTap={{ scale: 0.9 }}
-      className="overflow-hidden rounded-2xl bg-white shadow-sm"
+      className="overflow-hidden rounded-xl bg-white p-4 shadow-sm"
     >
-      <motion.div className=" bg-red-50 p-4">
+      <motion.div className=" rounded-xl bg-red-50 p-4 pb-0">
         <div className="relative h-[125px] w-full">
           <Image
             src="/img/apple.png"
@@ -18,7 +18,7 @@ function ProductMainCard() {
           />
         </div>
       </motion.div>
-      <div className="flex flex-col items-start p-4">
+      <div className="flex flex-col items-start py-3">
         <div className="flex w-full items-center justify-between ">
           <p className="text-sm font-semibold">Apple</p>
           <div className="flex flex-1 items-end justify-end ">

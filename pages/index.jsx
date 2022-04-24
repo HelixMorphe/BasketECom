@@ -9,7 +9,7 @@ import BestSellers from '../components/BestSellers'
 import Navbar from '../components/Navbar'
 import Login from '../components/Login'
 
-const Home = () => {
+const Home = ({ apiData }) => {
   const { data: session, status } = useSession()
   if (status === 'loading') {
     return <div>loading</div>
@@ -35,7 +35,7 @@ const Home = () => {
             <Categories />
           </div>
           <div className="mt-4">
-            <BestSellers />
+            <BestSellers data={apiData} />
           </div>
         </div>
         <div className="sticky bottom-0 bg-gray-50">
@@ -44,6 +44,14 @@ const Home = () => {
       </div>
     )
   }
+}
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`http://localhost:3000/api/products`)
+  const apiData = await res.json()
+
+  // Pass data to the page via props
+  return { props: { apiData } }
 }
 
 export default Home
