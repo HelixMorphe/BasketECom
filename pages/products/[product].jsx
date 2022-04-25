@@ -20,6 +20,7 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater'
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded'
 import { ArrowBack } from '@mui/icons-material'
 import Link from 'next/link'
+import axios from 'axios'
 
 function Product({ data }) {
   const { data: session, status } = useSession()
@@ -32,17 +33,24 @@ function Product({ data }) {
   const [count, setCount] = useState(1)
   const x = useMotionValue(0)
   useEffect(() => {
-    if (status === 'authenticated') {
-      console.log('started')
-      fetch(`${process.env.BASE_URI}/api/user/${session.user.name}`)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data, 'data')
-          setUserData(data)
-          setCartCount(data.cart.length)
-        })
-    }
-  }, [status])
+    console.log('started')
+    fetch(
+      `https://basket-git-dev-santhosh-cloud.vercel.app/api/user/${session.user.name}`,
+      {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data, 'data')
+        setUserData(data)
+        setCartCount(data.cart.length)
+      })
+      .catch((error) => console.log(error))
+  }, [])
   const background = useTransform(
     x,
     [0, 100, 200],
