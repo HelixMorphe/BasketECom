@@ -18,7 +18,7 @@ function BestSellers({ data }) {
         <div className="mt-2">
           <ProductCard
             id={item._id}
-            url="/img/apple.png"
+            url={item.imgUrl}
             color="bg-red-50"
             title={item.title}
             subTitle={item.subTitle}

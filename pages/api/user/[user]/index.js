@@ -1,5 +1,5 @@
-import dbConnect from '../../../util/dbConnect'
-import User from '../../../models/User'
+import dbConnect from '../../../../util/dbConnect'
+import User from '../../../../models/User'
 import Cors from 'cors'
 
 // Initializing the cors middleware

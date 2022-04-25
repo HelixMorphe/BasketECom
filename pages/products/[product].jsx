@@ -33,24 +33,26 @@ function Product({ data }) {
   const [count, setCount] = useState(1)
   const x = useMotionValue(0)
   useEffect(() => {
-    console.log('started')
-    fetch(
-      `https://basket-git-dev-santhosh-cloud.vercel.app/api/user/${session.user.name}`,
-      {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data, 'data')
-        setUserData(data)
-        setCartCount(data.cart.length)
-      })
-      .catch((error) => console.log(error))
-  }, [])
+    if (status === 'authenticated') {
+      console.log('started', session)
+      fetch(
+        `https://basket-git-dev-santhosh-cloud.vercel.app/api/user/${session.user.name}`,
+        {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data, 'data')
+          setUserData(data)
+          setCartCount(data.cart.length)
+        })
+        .catch((error) => console.log(error))
+    }
+  }, [status])
   const background = useTransform(
     x,
     [0, 100, 200],
@@ -65,10 +67,23 @@ function Product({ data }) {
     setTrigger(0)
     if (x.get() > constraintsRef.current.offsetWidth / 3) setTrigger(1)
   }
+  const handleAddToCart = () => {
+    setCartCount(count + 1)
+
+    // fetch(`http:localhost:3000/api/user/santhosh/cart/${data._id}`, {
+    //   method: 'POST',
+    // })
+    //   .then((response) => {
+    //     setCartCount(count + 1)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+  }
   const handleAnimationComplete = () => {
     if (x.get() > constraintsRef.current.offsetWidth / 2) {
       setSliderFinish(1)
-      setCartCount(cartCount + 1)
+      handleAddToCart()
     }
   }
   if (router.isFallback) {
@@ -109,7 +124,7 @@ function Product({ data }) {
                 >
                   <Image
                     className="absolute top-0 left-0 z-30 "
-                    src="/img/apple.png"
+                    src={data.imgUrl}
                     alt="apple"
                     layout="fill"
                     objectFit="contain"
