@@ -1,6 +1,7 @@
 // 6264e7dc9de6bac9f630edc4
 import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import {
   motion,
   useMotionValue,
@@ -23,7 +24,7 @@ import Link from 'next/link'
 function Product({ data }) {
   const { data: session, status } = useSession()
   const [userData, setUserData] = useState({})
-
+  const router = useRouter()
   const constraintsRef = useRef(null)
   const [cartCount, setCartCount] = useState(0)
   const [trigger, setTrigger] = useState(0)
@@ -33,7 +34,7 @@ function Product({ data }) {
   useEffect(() => {
     if (status === 'authenticated') {
       console.log('started')
-      fetch(`${process.env.BASE_URI}/api/user/${session.user.name}`)
+      fetch(`${process.env.BASE_URI}/${session.user.name}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data, 'data')
@@ -62,7 +63,9 @@ function Product({ data }) {
       setCartCount(cartCount + 1)
     }
   }
-
+  if (router.isFallback) {
+    return <div>Loading</div>
+  }
   return (
     <div className=" bg-gray-50">
       <div className=" bg-red-500/80">
