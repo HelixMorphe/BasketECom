@@ -34,7 +34,7 @@ function Product({ data }) {
   useEffect(() => {
     if (status === 'authenticated') {
       console.log('started')
-      fetch(`${process.env.BASE_URI}/${session.user.name}`)
+      fetch(`${process.env.BASE_URI}/api/user/${session.user.name}`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data, 'data')
