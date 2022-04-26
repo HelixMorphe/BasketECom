@@ -25,6 +25,7 @@ import axios from 'axios'
 function Product({ data }) {
   const { data: session, status } = useSession()
   const [userData, setUserData] = useState({})
+  const [userName, setUserName] = useState('.')
   const router = useRouter()
   const constraintsRef = useRef(null)
   const [cartCount, setCartCount] = useState(0)
@@ -34,7 +35,7 @@ function Product({ data }) {
   const x = useMotionValue(0)
   useEffect(() => {
     if (status === 'authenticated') {
-      console.log('started', session)
+      setUserName(session.user.name)
       fetch(
         `https://basket-git-dev-santhosh-cloud.vercel.app/api/user/${session.user.name}`,
         {
@@ -48,7 +49,6 @@ function Product({ data }) {
         .then((data) => {
           console.log(data, 'data')
           setUserData(data)
-          setCartCount(data.cart.length)
         })
         .catch((error) => console.log(error))
     }
@@ -101,7 +101,7 @@ function Product({ data }) {
             </motion.div>
 
             <motion.div whileTap={{ scale: 0.9 }} className="">
-              <Link href="/" passHref>
+              <Link href={`/${userName}/cart`} passHref>
                 <Badge
                   badgeContent={cartCount}
                   className="rounded-full bg-white p-2 shadow-sm"

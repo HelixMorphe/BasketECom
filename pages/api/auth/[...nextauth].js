@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import dbConnect from '../../../util/dbConnect'
 import User from '../../../models/User'
+import users from '../../../data'
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -23,23 +24,22 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         // Add logic here to look upname the user from the credentials supplied
-        await dbConnect()
 
-        const userSearch = await User.findOne({
-          username: req.body.username,
-          password: req.body.password,
-        })
+        const userSearch = users.find(
+          (item) =>
+            item.username === req.body.username &&
+            item.password === req.body.password
+        )
 
         //   const user = null
         const user = {
-          id: userSearch._id,
+          id: userSearch.id,
           name: userSearch.username,
           password: userSearch.password,
           cart: userSearch.cart,
           orders: userSearch.orders,
-          admin: userSearch.admin,
         }
-        console.log(user, 'User')
+
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return user
