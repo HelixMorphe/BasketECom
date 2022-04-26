@@ -116,9 +116,9 @@ function cart() {
                 if (router.query.user === 'user1') {
                   setOffer(3.5)
                 }
-                if (router.query.user === 'user2') {
-                  setOffer(12)
-                }
+              }
+              if (router.query.user === 'user2') {
+                setOffer(12)
               }
             }}
             whileTap={{ scale: 0.9 }}
