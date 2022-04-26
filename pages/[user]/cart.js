@@ -18,7 +18,7 @@ function cart() {
     }
 
     if (router.query.user === 'user2') {
-      setSubTotal(210)
+      setSubTotal(222)
     }
   }, [router.query.user])
   return (
